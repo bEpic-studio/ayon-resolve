@@ -137,6 +137,24 @@ class LoaderPluginsModel(BaseSettingsModel):
     )
 
 
+class OptionalPluginModel(BaseSettingsModel):
+    enabled: bool = SettingsField(True)
+    optional: bool = SettingsField(title="Optional")
+    active: bool = SettingsField(title="Active")
+
+
+class PublishPluginsModel(BaseSettingsModel):
+    IncrementScriptVersion: OptionalPluginModel = SettingsField(
+        title="Increment Workfile Version",
+        default_factory=OptionalPluginModel,
+        section="Integrators",
+        description=(
+            "Bumps up version of workfile if there are no errors in previous "
+            "plugins."
+        )
+    )
+
+
 class ResolveSettings(BaseSettingsModel):
     launch_ayon_menu_on_start: bool = SettingsField(
         False, title="Launch AYON menu on start of Resolve"
@@ -156,6 +174,11 @@ class ResolveSettings(BaseSettingsModel):
         default_factory=LoaderPluginsModel,
         title="Loader plugins",
     )
+    publish: PublishPluginsModel = SettingsField(
+        default_factory=PublishPluginsModel,
+        title="Publish plugins",
+    )
+
 
 
 DEFAULT_VALUES = {
