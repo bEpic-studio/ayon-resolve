@@ -154,7 +154,7 @@ class OptionalPluginModel(BaseSettingsModel):
 
 
 class PublishPluginsModel(BaseSettingsModel):
-    IncrementScriptVersion: OptionalPluginModel = SettingsField(
+    IncrementWorkfileVersion: OptionalPluginModel = SettingsField(
         title="Increment Workfile Version",
         default_factory=OptionalPluginModel,
         section="Integrators",
@@ -241,5 +241,12 @@ DEFAULT_VALUES = {
                 }
             ]
         }
-    }
+    },
+    "publish": {
+        "IncrementWorkfileVersion": {
+            "enabled": False,
+            "optional": True,
+            "active": False
+        }
+    },
 }

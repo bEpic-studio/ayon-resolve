@@ -9,12 +9,12 @@ from ayon_core.pipeline import registered_host, OptionalPyblishPluginMixin
 from ayon_resolve.api.pipeline import ResolveHost
 
 
-class IncrementScriptVersion(pyblish.api.ContextPlugin,
+class IncrementWorkfileVersion(pyblish.api.ContextPlugin,
                              OptionalPyblishPluginMixin):
-    """Increment current script version."""
+    """Increment current workfile version."""
 
     order = pyblish.api.IntegratorOrder + 0.9
-    label = "Increment Script Version"
+    label = "Increment Workfile Version"
     optional = True
     families = ["workfile"]
     hosts = ["resolve"]
@@ -25,14 +25,14 @@ class IncrementScriptVersion(pyblish.api.ContextPlugin,
         if not self.is_active(context.data):
             return
 
-        if not context.data.get("increment_script_version", True):
+        if not context.data.get("increment_workfile_version", True):
             self.log.info(
-                "Skipping script version increment as per settings."
+                "Skipping workfile version increment as per settings."
             )
             return
 
         assert all(result["success"] for result in context.data["results"]), (
-            "Publishing not successful so version is not increased.")
+            "Publishing not successful so workfile version is not increased.")
 
         current_filepath = context.data["currentFile"]
         host: ResolveHost = registered_host()
